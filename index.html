@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Tab Memo</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <style>
+      body {
+        text-align: center;
+      }
+
+      noscript{
+        font-size:3rem;
+      }
+
+      .container {
+        position: relative;
+        display: inline-block;
+        margin: 40px;
+        padding: 20px;
+        width: 80%;
+        border-radius: 5px;
+        box-shadow: 0 0 70px 0 rgba(160, 160, 160, 0.5);
+        text-align: justify;
+      }
+
+      #title,
+      #content {
+        cursor: text;
+      }
+
+      #title {
+        font-size: 2.5rem;
+        margin-top: 0;
+      }
+
+      #content {
+        font-size: 1.25rem;
+        color: #415462;
+      }
+
+      .about {
+        color: slategrey;
+        cursor: default;
+      }
+
+      #pin {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+      }
+    </style>
+  </head>
+  <body>
+    <article class="container" id="memo">
+      <h1 id="title" contenteditable="true">Write your memo here!</h1>
+      <p id="content" contenteditable="true">content</p>
+      <img id="pin" src="favicon.ico" alt="pin" />
+    </article>
+    <p class="about">*Your memo will be saved in the browser.</p>
+
+    <script>
+      const memoTitle = document.getElementById("title");
+      const memoContent = document.getElementById("content");
+
+      if (localStorage.length > 0) {
+        memoTitle.textContent = localStorage.getItem("title");
+        memoContent.textContent = localStorage.getItem("content");
+        document.title = localStorage.getItem("title");
+      }
+
+      memoTitle.addEventListener("input", () => {
+        document.title = memoTitle.textContent;
+        localStorage.setItem("title", memoTitle.textContent);
+      });
+
+      memoContent.addEventListener("input", () => {
+        localStorage.setItem("content", memoContent.textContent);
+      });
+
+      window.onbeforeunload = () => {
+        return false;
+      };
+    </script>
+    <noscript>
+      Please enable Javascript to save your memo.
+    </noscript>
+  </body>
+</html>
